@@ -5,6 +5,24 @@
     <title>Supinfo - Jeu de Memory</title>
 </head>
 <body>
+<div id="menu">
+    <h1>Jeu memory</h1>
+    <p>Choisissez le dos de carte que vous voulez :</p>
+    <button onclick="UIManagerInstance.changeFaceDownStyleID('0')"><img src="assets/faceDown0.png" alt=""></button>
+    <button onclick="UIManagerInstance.changeFaceDownStyleID('1')"><img src="assets/faceDown1.png" alt=""></button>
+    <button onclick="UIManagerInstance.changeFaceDownStyleID('2')"><img src="assets/faceDown2.png" alt=""></button>
 
+    <p>Choisissez le nombre de ligne/colonne que vous voulez:</p>
+    <button onclick="UIManagerInstance.changeDifficultyOption('2/3')">2/3</button>
+    <button onclick="UIManagerInstance.changeDifficultyOption('3/6')">3/6</button>
+    <button onclick="UIManagerInstance.changeDifficultyOption('3/12')">3/12</button>
+    <button onclick="UIManagerInstance.changeDifficultyOption('hardcore')">Hardcore</button>
+    <br>
+    <button onclick="gameManagerInstance.startGame()">Démarrer le jeu</button>
+</div>
+<div id="game">
+
+</div>
 </body>
+<script src="script.js"></script>
 </html>
