@@ -1,11 +1,25 @@
+var timer = 0;
+
 class UIManager {
     constructor(defaultFaceDownStyleID, defaultDifficultyOption) {
         this.faceDownStyleID = defaultFaceDownStyleID;
         this.difficultyOption = defaultDifficultyOption;
         this.cardsFound = [];
         this.numberOfMoves = 0;
-        this.timer = 0;
-        this.hideGameInfo()
+        this.hideGameInfo();
+    }
+
+    startTimer() {
+        this.myTimer = setInterval(this.handleTimer, 1000);
+    }
+
+    handleTimer() {
+        timer++;
+        document.getElementById('time').innerText = timer + 's'
+    }
+
+    stopTimer() {
+        clearInterval(this.myTimer)
     }
 
     changeFaceDownStyleID(chosenFaceDownStyle) {
@@ -64,7 +78,6 @@ class UIManager {
                 gameDiv.className = 'difficulty3';
             }
             gameDiv.appendChild(newCardButton);
-            console.log(gameDiv)
         }
     }
 
@@ -164,6 +177,7 @@ class GameManager {
         this.UIManager.createCardsHTML(this.gameBoard);
         // Ask to refresh face down or up status (all cards are face down here)
         this.UIManager.showCardDownOrUp(this.gameBoard);
+        this.UIManager.startTimer();
         // Add a document listener on each card
         this.addOnClickHandler();
     }
@@ -219,6 +233,7 @@ class GameManager {
                 // Check if the pairSelected array has two elements with identical cardID
                 this.checkIfPair()
             }
+            this.checkIfWin()
         }
     }
 
@@ -232,6 +247,12 @@ class GameManager {
         this.UIManager.createCardsHTML(this.gameBoard);
         this.UIManager.showCardDownOrUp(this.gameBoard);
         this.addOnClickHandler();
+    }
+
+    checkIfWin() {
+        if (this.gameBoard.length === 0) {
+            this.UIManager.stopTimer()
+        }
     }
 
     // Checks if two cards have the same cardID
