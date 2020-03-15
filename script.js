@@ -5,6 +5,7 @@ class UIManager {
         this.cardsFound = [];
         this.numberOfMoves = 0;
         this.timer = 0;
+        this.hideGameInfo()
     }
 
     changeFaceDownStyleID(chosenFaceDownStyle) {
@@ -32,6 +33,13 @@ class UIManager {
     }
 
     createCardsHTML(gameBoard) {
+        // Show the cards found
+        for (const cardFound of this.cardsFound) {
+            var cardFoundImage = document.createElement("IMG");
+            cardFoundImage.src = 'assets/' + cardFound;
+            document.getElementById('cardsFound').appendChild(cardFoundImage)
+        }
+
         // Iterate over each of the card in the gameBoard array
         for (const card of gameBoard) {
             // Create button that encapsulates image
@@ -47,15 +55,26 @@ class UIManager {
             // Add image to the button
             newCardButton.appendChild(newCardImage);
             // Add button to the document
-            document.getElementById('game').appendChild(newCardButton);
+            let gameDiv = document.getElementById('game');
+            if (this.difficultyOption === '2/3') {
+                gameDiv.className = 'difficulty1';
+            } else if (this.difficultyOption === '3/6') {
+                gameDiv.className = 'difficulty2';
+            } else if (this.difficultyOption === '3/12' || this.difficultyOption === 'hardcore') {
+                gameDiv.className = 'difficulty3';
+            }
+            gameDiv.appendChild(newCardButton);
+            console.log(gameDiv)
         }
     }
 
     removeCardsHTML() {
-        document.getElementById('game').innerHTML = ""
+        document.getElementById('game').innerHTML = "";
+        document.getElementById('cardsFound').innerHTML = ""
     }
 
     showCardDownOrUp(gameBoard) {
+        document.getElementById('verif').innerText = this.numberOfMoves;
         // Iterate over each of the card in the gameBoard array
         for (const card of gameBoard) {
             // Get the button of the card which has a uniqueID ID
@@ -73,6 +92,21 @@ class UIManager {
             }
         }
     }
+
+    showGameInfo() {
+        const divInfo = document.getElementById("info");
+        divInfo.style.display = "block";
+    }
+
+    hideGameInfo() {
+        const divInfo = document.getElementById("info");
+        divInfo.style.display = "none";
+    }
+
+    hideMenu() {
+        const divMenu = document.getElementById("menu");
+        divMenu.style.display = "none";
+    }
 }
 
 class CardObject {
@@ -86,14 +120,6 @@ class CardObject {
 
     createUniqueID(id) {
         this.uniqueID = id;
-    }
-
-    setCardDown() {
-        this.cardIsFacedDown = true;
-    }
-
-    setCardUp() {
-        this.cardIsFacedDown = false;
     }
 }
 
@@ -110,7 +136,21 @@ class GameManager {
         this.reshuffleOption = false;
     }
 
+    resetEverything() {
+        this.gameBoard = [];
+        this.pairSelected = [];
+        this.numberOfPairsToCall = 0;
+        this.reshuffleOption = false;
+        this.UIManager.removeCardsHTML();
+        this.UIManager.cardsFound = [];
+        this.UIManager.numberOfMoves = 0;
+        this.UIManager.timer = 0;
+    }
+
     startGame() {
+        this.UIManager.showGameInfo();
+        this.UIManager.hideMenu();
+        this.resetEverything();
         // Define the number of pairs to call based on the difficulty chosen
         this.defineNumberOfPairsToCall();
         // Create objects of the CardObject class based on the number of pairs to call
