@@ -1,0 +1,51 @@
+#menu {
+    display: flex;
+    justify-content: center;
+}
+
+#menu-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2.67em 2.67em 2.67em 2.67em;
+    text-align: center;
+}
+
+#info {
+    padding: 2.67em 2.67em 2.67em 2.67em;
+    display: block;
+    text-align: center;
+}
+
+#id {
+    max-width: 100%;
+    width: 100%;
+}
+.difficulty1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.difficulty2{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.difficulty3{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.difficulty1 button img, .difficulty2 button img, .difficulty3 button img  {
+    max-width: 100%;
+}
+
