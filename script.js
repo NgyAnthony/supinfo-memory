@@ -7,6 +7,7 @@ class UIManager {
         this.cardsFound = [];
         this.numberOfMoves = 0;
         this.hideGameInfo();
+        this.hideGame();
     }
 
     startTimer() {
@@ -54,6 +55,16 @@ class UIManager {
             document.getElementById('cardsFound').appendChild(cardFoundImage)
         }
 
+        let gameDiv = document.getElementById('game');
+
+        if (this.difficultyOption === '2/3') {
+            gameDiv.className = 'difficulty1';
+        } else if (this.difficultyOption === '3/6') {
+            gameDiv.className = 'difficulty2';
+        } else if (this.difficultyOption === '3/12' || this.difficultyOption === 'hardcore') {
+            gameDiv.className = 'difficulty3';
+        }
+
         // Iterate over each of the card in the gameBoard array
         for (const card of gameBoard) {
             // Create button that encapsulates image
@@ -69,14 +80,6 @@ class UIManager {
             // Add image to the button
             newCardButton.appendChild(newCardImage);
             // Add button to the document
-            let gameDiv = document.getElementById('game');
-            if (this.difficultyOption === '2/3') {
-                gameDiv.className = 'difficulty1';
-            } else if (this.difficultyOption === '3/6') {
-                gameDiv.className = 'difficulty2';
-            } else if (this.difficultyOption === '3/12' || this.difficultyOption === 'hardcore') {
-                gameDiv.className = 'difficulty3';
-            }
             gameDiv.appendChild(newCardButton);
         }
     }
@@ -106,6 +109,16 @@ class UIManager {
         }
     }
 
+    showGame() {
+        const divGame = document.getElementById("game-container");
+        divGame.style.display = "flex";
+    }
+
+    hideGame() {
+        const divGame = document.getElementById("game-container");
+        divGame.style.display = "none";
+    }
+
     showGameInfo() {
         const divInfo = document.getElementById("info");
         divInfo.style.display = "block";
@@ -116,9 +129,24 @@ class UIManager {
         divInfo.style.display = "none";
     }
 
+    showMenu() {
+        const divMenu = document.getElementById("menu");
+        divMenu.style.display = "flex";
+    }
+
     hideMenu() {
         const divMenu = document.getElementById("menu");
         divMenu.style.display = "none";
+    }
+
+    showWinner() {
+        const divWinner = document.getElementById("endOfGame");
+        divWinner.style.display = "block";
+    }
+
+    hideWinner() {
+        const divWinner = document.getElementById("endOfGame");
+        divWinner.style.display = "none";
     }
 }
 
@@ -136,7 +164,6 @@ class CardObject {
     }
 }
 
-
 class GameManager {
     constructor(UIManagerRef) {
         // Keep the reference of the UIManager instance
@@ -147,6 +174,12 @@ class GameManager {
         this.pairSelected = [];
         this.numberOfPairsToCall = 0;
         this.reshuffleOption = false;
+    }
+
+    playAgain() {
+        this.UIManager.showMenu();
+        this.UIManager.hideGameInfo();
+        timer = 0
     }
 
     resetEverything() {
@@ -162,7 +195,9 @@ class GameManager {
 
     startGame() {
         this.UIManager.showGameInfo();
+        this.UIManager.showGame();
         this.UIManager.hideMenu();
+        this.UIManager.hideWinner();
         this.resetEverything();
         // Define the number of pairs to call based on the difficulty chosen
         this.defineNumberOfPairsToCall();
@@ -251,7 +286,9 @@ class GameManager {
 
     checkIfWin() {
         if (this.gameBoard.length === 0) {
-            this.UIManager.stopTimer()
+            this.UIManager.stopTimer();
+            this.UIManager.showWinner();
+            this.UIManager.hideGame();
         }
     }
 
@@ -267,7 +304,7 @@ class GameManager {
             // Remove the cards from the gameBoard array
             this.removeCards(cardOne.cardID);
             // Wait before refreshing the HTML
-            setTimeout(() => this.reInitializeHTML(), 1000);
+            setTimeout(() => this.reInitializeHTML(), 500);
         } else {
             // Set the cards status back to face down
             cardOne.cardIsFacedDown = true;
@@ -277,7 +314,8 @@ class GameManager {
                 // Re-shuffle the board
                 this.shuffleGameBoard();
                 // Reset the HTML
-                this.reInitializeHTML()
+                console.log('wait');
+                setTimeout(() => this.reInitializeHTML(), 1000)
             } else {
                 // Wait before refreshing the HTML
                 setTimeout(() => this.UIManager.showCardDownOrUp(this.gameBoard), 1000);

@@ -4,33 +4,53 @@
     <meta charset="UTF-8">
     <title>Supinfo - Jeu de Memory</title>
     <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
 <div id="menu">
-    <h1>Jeu memory</h1>
-    <p>Choisissez le dos de carte que vous voulez :</p>
-    <button onclick="UIManagerInstance.changeFaceDownStyleID('0')"><img src="assets/faceDown0.png" alt=""></button>
-    <button onclick="UIManagerInstance.changeFaceDownStyleID('1')"><img src="assets/faceDown1.png" alt=""></button>
-    <button onclick="UIManagerInstance.changeFaceDownStyleID('2')"><img src="assets/faceDown2.png" alt=""></button>
+    <div id="menu-wrapper">
+        <h1>Jeu memory</h1>
+        <p>Choisissez le dos de carte que vous voulez :</p>
+        <div>
+            <button onclick="UIManagerInstance.changeFaceDownStyleID('0')"><img src="assets/faceDown0.png" alt=""></button>
+            <button onclick="UIManagerInstance.changeFaceDownStyleID('1')"><img src="assets/faceDown1.png" alt=""></button>
+            <button onclick="UIManagerInstance.changeFaceDownStyleID('2')"><img src="assets/faceDown2.png" alt=""></button>
+        </div>
 
-    <p>Choisissez le nombre de ligne/colonne que vous voulez:</p>
-    <button onclick="UIManagerInstance.changeDifficultyOption('2/3')">2/3</button>
-    <button onclick="UIManagerInstance.changeDifficultyOption('3/6')">3/6</button>
-    <button onclick="UIManagerInstance.changeDifficultyOption('3/12')">3/12</button>
-    <button onclick="UIManagerInstance.changeDifficultyOption('hardcore')">Hardcore</button>
-    <br>
-    <button onclick="gameManagerInstance.startGame()">Démarrer le jeu</button>
+        <p>Choisissez le nombre de ligne/colonne que vous voulez:</p>
+        <div>
+            <button onclick="UIManagerInstance.changeDifficultyOption('2/3')">2/3</button>
+            <button onclick="UIManagerInstance.changeDifficultyOption('3/6')">3/6</button>
+            <button onclick="UIManagerInstance.changeDifficultyOption('3/12')">3/12</button>
+            <button onclick="UIManagerInstance.changeDifficultyOption('hardcore')">Hardcore</button>
+        </div>
+        <br>
+        <button onclick="gameManagerInstance.startGame()">Démarrer le jeu</button>
+    </div>
 </div>
-<div id="game">
 
+<div id="game-container" style="display: flex; justify-content: center">
+    <div id="game-wrapper" style="display: flex; justify-content: center; flex-direction: column">
+        <h1 style="text-align: center; margin-bottom: 2em">Plateau de jeu</h1>
+        <div id="game">
+
+        </div>
+    </div>
 </div>
 
 <div id="info">
+    <h1>Informations</h1>
+    <hr>
     <h2>Timer: <span id="time"></span></h2>
     <h2>Nombre de vérifications: <span id="verif"></span></h2>
     <h2>Cartes trouvées :</h2>
     <div id="cardsFound">
 
+    </div>
+    <hr>
+    <div id="endOfGame">
+        <h2>Fin du jeu. Voulez-vous rejouer ?</h2>
+        <iframe src="https://giphy.com/embed/mIZ9rPeMKefm0" width="344" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/dancing-happy-mIZ9rPeMKefm0">via GIPHY</a></p>        <button onclick="gameManagerInstance.playAgain()">Rejouer</button>
     </div>
 </div>
 </body>
